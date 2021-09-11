@@ -4,10 +4,13 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using _2C2PTechExam.Entity;
+using _2C2PTechExam.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace _2C2PTechExam
 {
@@ -23,6 +26,13 @@ namespace _2C2PTechExam
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddDbContext<InvoiceContext>(options => 
+             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+
+
+
             services.AddControllersWithViews();
         }
 
