@@ -6,6 +6,7 @@ namespace _2C2PTechExam.Models
     {
         public InvoiceContext(DbContextOptions<InvoiceContext> options) : base(options)
         {
+
         }
 
 

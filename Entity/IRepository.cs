@@ -9,7 +9,7 @@ namespace _2C2PTechExam.Entity
 {
     public interface IRepository<T> where T : class
     {
-        Task UploadFile(IFormFile entity);
+        string UploadFile(IFormFile entity);
 
     }
 }

@@ -2,14 +2,9 @@
 using _2C2PTechExam.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace _2C2PTechExam.Controllers
 {
@@ -21,13 +16,12 @@ namespace _2C2PTechExam.Controllers
 
         private readonly InvoiceContext context;
 
-
         public HomeController(ILogger<HomeController> logger, IRepository<Invoice> repository, InvoiceContext context)
         {
             _logger = logger;
             this.context = context;
             this.repository = repository;
-                 }
+        }
 
         public IActionResult Index()
         {
@@ -51,11 +45,11 @@ namespace _2C2PTechExam.Controllers
         {
             if (ModelState.IsValid)
             {
-
-                repository.UploadFile(Request.Form.Files[0]);
+                //ViewBag.TotalStudents = repository.UploadFile(Request.Form.Files[0]); ;
+                // ViewBag.Message = repository.UploadFile(Request.Form.Files[0]);
 
                 //ViewBag.Countries = new List<NewsStyleUriParser>;
-            
+                ViewBag.Message = repository.UploadFile(Request.Form.Files[0]);
                 return View("Index");
             }
             else

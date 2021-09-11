@@ -8,8 +8,11 @@ using System.Threading.Tasks;
 namespace _2C2PTechExam.Entity
 {
     public interface IFileValidation
-
     {
-        Task<List<Invoice>> Validate(IFormFile file);
+        bool FileIsValid(IFormFile file);
+
+        string ErrorMessage { set; get; }
+
+        List<Invoice> Invoices { set; get; }
     }
 }

@@ -7,17 +7,23 @@ using System.Threading.Tasks;
 
 namespace _2C2PTechExam.Entity
 {
-    public class FileValidationXML: IFileValidation
+    public class FileValidationXML: FileValidation, IFileValidation
     {
-        public async Task<List<Invoice>> Validate(IFormFile file)
+
+        public List<Invoice> Invoices
+        {
+            set;
+            get;
+        }
+        public bool FileIsValid(IFormFile file)
         {
 
             List<Invoice> invoiceList = new List<Invoice>();
-
+            Invoices = invoiceList;
 
             //await return invoiceList;
 
-            return invoiceList;
+            return true;
         }
     }
 }

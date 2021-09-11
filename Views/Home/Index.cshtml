@@ -8,14 +8,18 @@
 <div asp-validation-summary="All" class="text-danger"></div>
 
 <form name="form1" asp-controller="Home" enctype="multipart/form-data" asp-action="ProcessForm">
-    <h2>Select Country :</h2>
+    <h2>Select File to Upload :</h2>
     <div class="form-group">
 
-        <input type="file" name="upload" id="file1" class="form-control" />
+        <input type="file" name="upload" id="file1" class="form-control"
+               required />
     </div>
 
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-primary">Upload</button>
 
+     <div>
+        @ViewBag.Message
+    </div>
 </form>
 
 

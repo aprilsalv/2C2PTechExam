@@ -21,38 +21,47 @@ namespace _2C2PTechExam.Entity
         }
 
         /// <summary>
-        /// Create employee
+        /// Upload file
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="file"></param>
         /// <returns></returns>
-        public async Task UploadFile(IFormFile entity)
+        public  string UploadFile(IFormFile file)
         {
 
             List<Invoice> invoiceList;          
 
-            string ext = System.IO.Path.GetExtension(entity.FileName);
+            string ext = System.IO.Path.GetExtension(file.FileName);
 
             switch (ext)
             {
-                case "csv":
+                case ".csv":
                     ifileValidate = new FileValidationCSV();
-                break;
-
-                case "xml":
+                    break;
+                case ".xml":
                     ifileValidate = new FileValidationXML();
                     break;
-
                 default:
-                    ifileValidate = new FileValidationCSV();
+                    ifileValidate = new FileValidation();
                     break;
             }
 
+            string rtn = "";
 
-            invoiceList = await ifileValidate.Validate(entity);
+            if (ifileValidate.FileIsValid(file))
+            {
+                 context.BulkInsert(ifileValidate.Invoices);
+            }
+            else {
+                rtn = ifileValidate.ErrorMessage;
+            }
 
+
+
+
+            return rtn;
 
             //context.BulkInsert(invoiceList);
-           
+
 
             //await context.SaveChangesAsync();
         }

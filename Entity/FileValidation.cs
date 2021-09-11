@@ -7,8 +7,16 @@ using System.Threading.Tasks;
 
 namespace _2C2PTechExam.Entity
 {
-    public class FileValidationCSV : FileValidation,IFileValidation
+
+    public  class FileValidation: IFileValidation
     {
+       
+
+        public string ErrorMessage
+        {
+            set;
+            get;
+        }
 
 
         public List<Invoice> Invoices
@@ -18,13 +26,14 @@ namespace _2C2PTechExam.Entity
         }
 
 
-        public bool FileIsValid(IFormFile file)
-        {
-            List<Invoice> invoiceList = new List<Invoice>();
 
+        bool IFileValidation.FileIsValid(IFormFile file)
+        {
             List<string> err = new List<string>();
 
-            //await return invoiceList;
+           // ErrorMessage = "Wrong Format";
+
+            err.Add("Wrong Format");
 
             if (!FileSizeIsValid(file))
             {
@@ -33,9 +42,15 @@ namespace _2C2PTechExam.Entity
 
             ErrorMessage = String.Join(";", err);
 
-            Invoices = invoiceList;
-
             return false;
         }
+
+
+        public bool FileSizeIsValid(IFormFile file)
+        {
+            return file.Length > 1048576 ? false : true; 
+        }
+
     }
+
 }
