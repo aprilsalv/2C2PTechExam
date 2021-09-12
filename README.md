@@ -5,7 +5,7 @@ This app is developed in .Net Core, MVC, EF, Bootstrap and Sql Server express ed
 
 1. All necessary files in order to run the application are all in the content root path such as:
 
-a. Database Scripts
+a. Database Scripts <br>
 b. Test Data
 
 2. This app has api methods:
