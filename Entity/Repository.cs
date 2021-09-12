@@ -20,6 +20,12 @@ namespace _2C2PTechExam.Entity
             this.context = context;
         }
 
+        public string RootFolder
+        {
+            set;
+            get;
+        }
+
         /// <summary>
         /// Upload file
         /// </summary>
@@ -46,6 +52,7 @@ namespace _2C2PTechExam.Entity
             }
 
             string rtn = "";
+            ifileValidate.RootFolder = RootFolder;
 
             if (ifileValidate.FileIsValid(file))
             {

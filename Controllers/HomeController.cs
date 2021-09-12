@@ -1,5 +1,6 @@
 ﻿using _2C2PTechExam.Entity;
 using _2C2PTechExam.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,13 +15,16 @@ namespace _2C2PTechExam.Controllers
 
         private readonly IRepository<Invoice> repository;
 
+        private IWebHostEnvironment _env;
+
         private readonly InvoiceContext context;
 
-        public HomeController(ILogger<HomeController> logger, IRepository<Invoice> repository, InvoiceContext context)
+        public HomeController(ILogger<HomeController> logger, IRepository<Invoice> repository, InvoiceContext context,  IWebHostEnvironment env)
         {
             _logger = logger;
             this.context = context;
             this.repository = repository;
+            this._env = env;
         }
 
         public IActionResult Index()
@@ -49,6 +53,7 @@ namespace _2C2PTechExam.Controllers
                 // ViewBag.Message = repository.UploadFile(Request.Form.Files[0]);
 
                 //ViewBag.Countries = new List<NewsStyleUriParser>;
+                repository.RootFolder = this._env.ContentRootPath;
                 ViewBag.Message = repository.UploadFile(Request.Form.Files[0]);
                 return View("Index");
             }

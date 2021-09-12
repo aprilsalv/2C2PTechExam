@@ -11,5 +11,7 @@ namespace _2C2PTechExam.Entity
     {
         string UploadFile(IFormFile entity);
 
+        string RootFolder { set; get; }
+
     }
 }

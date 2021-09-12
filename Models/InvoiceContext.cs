@@ -10,6 +10,6 @@ namespace _2C2PTechExam.Models
         }
 
 
-       public DbSet<Invoice> Employee { get; set; }
+       public DbSet<Invoice> Invoices { get; set; }
     }
 }
