@@ -12,9 +12,7 @@ namespace _2C2PTechExam.Controllers
         private readonly IRepository<Invoice> repository;
         public InvoiceController (IRepository<Invoice> repository)
         {
-
-            this.repository = repository;
-     
+            this.repository = repository;     
         }
 
 
@@ -36,8 +34,6 @@ namespace _2C2PTechExam.Controllers
         {
 
             var resultTuple = repository.GetInvoiceByStatus(status);
-
-
 
             return JsonConvert.SerializeObject(resultTuple);
         }

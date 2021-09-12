@@ -1,13 +1,9 @@
 ﻿using _2C2PTechExam.Models;
 using Microsoft.AspNetCore.Http;
-using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace _2C2PTechExam.Entity
@@ -34,11 +30,16 @@ namespace _2C2PTechExam.Entity
                 err.Add("More than 1 mb file.");
             }
 
-            ErrorMessage = String.Join(";", err);
+            var rtnOk =  ReadAsStringAsync(file);
 
-            var s =  ReadAsStringAsync(file);
-            
-            return s.Result;
+            if (!rtnOk.Result)
+            {
+                err.Add("Bad Request");
+            }
+
+            ErrorMessage = String.Join(" ", err);
+
+            return rtnOk.Result;
         }
 
         private async Task<bool> ReadAsStringAsync(IFormFile file)

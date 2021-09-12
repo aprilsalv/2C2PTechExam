@@ -27,11 +27,19 @@
                 }
                 else if (ViewBag.Message != null)
                 {
-                    <i class="fas fa-warning" style="color:red">Data has errors. Kindly see the log.</i>
+                     <i class="fas fa-warning" style="color:red">@ViewBag.Message</i>
                 }
             </div>
             <div class="col-sm">
-                @Html.ActionLink("Download", "Download", new { fileName = ViewBag.LogFileName })
+                @if (ViewBag.Message == "Success")
+                {
+                    @Html.ActionLink("Click to download the log.", "Download", new { fileName = ViewBag.LogFileName }) 
+                }
+                else if (ViewBag.LogFileName != "" && ViewBag.LogFileName != null)
+                {
+                     @Html.ActionLink("Something went wrong! Click to see the error log.", "Download", new { fileName = ViewBag.LogFileName })                     
+                }
+
             </div>
         </div>
     </div>

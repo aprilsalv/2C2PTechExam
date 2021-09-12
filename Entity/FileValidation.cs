@@ -1,14 +1,9 @@
 ﻿using _2C2PTechExam.Models;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace _2C2PTechExam.Entity
@@ -18,48 +13,80 @@ namespace _2C2PTechExam.Entity
     {
        
 
+        /// <summary>
+        /// reference Error message
+        /// </summary>
         public string ErrorMessage
         {
             set;
             get;
         }
 
+        /// <summary>
+        /// reference for the Logs
+        /// </summary>
         public List<string> Logs
         {
             set;
             get;
         }
+      
+        /// <summary>
+        /// reference for the list of invoices
+        /// </summary>
         public List<Invoice> Invoices
         {
             set;
             get;
         }
+        
+        /// <summary>
+        /// reference for the root folder
+        /// </summary>
         public string RootFolder { set; get; }
+      
+        /// <summary>
+        /// A reference for the log
+        /// </summary>
         public string LogFileName { set; get; }
-
+        
+        
+        /// <summary>
+        /// Should be .csv and .xml 
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         bool IFileValidation.FileIsValid(IFormFile file)
         {
             List<string> err = new List<string>();
 
-           // ErrorMessage = "Wrong Format";
-
-            err.Add("Wrong Format");
+            err.Add("Unknown format. ");
 
             if (!FileSizeIsValid(file))
             {
                 err.Add("More than 1 mb file.");
             }
 
-            ErrorMessage = String.Join(";", err);
+            ErrorMessage = String.Join(" ", err);
 
             return false;
         }
 
+        /// <summary>
+        /// Check if file is more than 1 Mb
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         public bool FileSizeIsValid(IFormFile file)
         {
             return file.Length > 1048576 ? false : true; 
         }
 
+        /// <summary>
+        /// Check if currency is existing in the xml lookup
+        /// </summary>
+        /// <param name="currency"></param>
+        /// <returns></returns>
         public bool CurrencyIsValid(string currency)
         {
 
@@ -84,7 +111,11 @@ namespace _2C2PTechExam.Entity
 
         }
 
-
+        /// <summary>
+        /// Check if date is valid
+        /// </summary>
+        /// <param name="sDate"></param>
+        /// <returns></returns>
         public virtual bool DateIsValid(string sDate)
         {
 
@@ -104,6 +135,10 @@ namespace _2C2PTechExam.Entity
 
         }
 
+
+        /// <summary>
+        /// To save the log in Log folde
+        /// </summary>
         public void StoreTheLogs()
         {
 

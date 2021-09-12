@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +18,7 @@ namespace _2C2PTechExam.Entity
             set;
             get;
         }
+     
         public bool FileIsValid(IFormFile file)
         {
             List<Invoice> invoiceList = new List<Invoice>();
@@ -32,11 +32,16 @@ namespace _2C2PTechExam.Entity
                 err.Add("More than 1 mb file.");
             }
 
-            ErrorMessage = String.Join(";", err);
+            var rtnOk = ReadAsStringAsync(file);
 
-            var s = ReadAsStringAsync(file);
+            if (!rtnOk.Result)
+            {
+                err.Add("Bad Request");
+            }
 
-            return s.Result;
+            ErrorMessage = String.Join(" ", err);
+
+            return rtnOk.Result;
         }
 
         private async Task<bool> ReadAsStringAsync(IFormFile file)
@@ -58,11 +63,6 @@ namespace _2C2PTechExam.Entity
 
 
 
-            foreach (dynamic item in invoiceList)
-            {
-                //string name = item.Nasddd;
-                //int id = item.Id;
-            }
 
             return ValidateRecord(invoiceList);
 
@@ -92,11 +92,8 @@ namespace _2C2PTechExam.Entity
 
             Invoices = new List<Invoice>();
             List<string> log = new List<string>();
-            string[] fields;
             bool recordIsValid = true;
             bool OkToImport = invoiceList.Count<dynamic>() > 0 ? true : false;
-
-
 
             foreach (dynamic record in invoiceList)
             {
@@ -104,7 +101,6 @@ namespace _2C2PTechExam.Entity
 
                
 
-                //check if record has 5 columns
                 // record is valid
                 StringBuilder strB;
                 if (recordIsValid)
@@ -191,11 +187,11 @@ namespace _2C2PTechExam.Entity
 
 
 
-
+            //Quantity the Logs
             Logs = log;
 
-
-                StoreTheLogs();
+            //Create a log
+            StoreTheLogs();
             
 
             return OkToImport;
