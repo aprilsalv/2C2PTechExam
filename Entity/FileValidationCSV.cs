@@ -36,8 +36,6 @@ namespace _2C2PTechExam.Entity
 
             ErrorMessage = String.Join(";", err);
 
-            Invoices = invoiceList;
-           
             var s =  ReadAsStringAsync(file);
             
             return s.Result;
@@ -213,6 +211,11 @@ namespace _2C2PTechExam.Entity
             }
 
             Logs = log;
+
+
+            
+                StoreTheLogs();
+            
 
             return OkToImport;
 

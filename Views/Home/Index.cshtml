@@ -2,7 +2,7 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
 </div>
 
 <div asp-validation-summary="All" class="text-danger"></div>
@@ -15,11 +15,30 @@
                required />
     </div>
 
-    <button type="submit" class="btn btn-primary">Upload</button>
-
-     <div>
-        @ViewBag.Message
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </div>
+            <div class="col-sm">                
+                @if (ViewBag.Message == "Success")
+                {
+                    <i class="fas fa-check" style="color:green">Data is uploaded.</i> 
+                }
+                else if (ViewBag.Message != null)
+                {
+                    <i class="fas fa-warning" style="color:red">Data has errors. Kindly see the log.</i>
+                }
+            </div>
+            <div class="col-sm">
+                @Html.ActionLink("Download", "Download", new { fileName = ViewBag.LogFileName })
+            </div>
+        </div>
     </div>
+
+
+
+
 </form>
 
 

@@ -35,6 +35,7 @@ namespace _2C2PTechExam.Entity
             get;
         }
         public string RootFolder { set; get; }
+        public string LogFileName { set; get; }
 
         bool IFileValidation.FileIsValid(IFormFile file)
         {
@@ -53,7 +54,6 @@ namespace _2C2PTechExam.Entity
 
             return false;
         }
-
 
         public bool FileSizeIsValid(IFormFile file)
         {
@@ -85,7 +85,7 @@ namespace _2C2PTechExam.Entity
         }
 
 
-        public bool DateIsValid(string sDate)
+        public virtual bool DateIsValid(string sDate)
         {
 
             DateTime dt;
@@ -104,6 +104,22 @@ namespace _2C2PTechExam.Entity
 
         }
 
+        public void StoreTheLogs()
+        {
+
+            var fileName = Path.Combine(RootFolder, @"Log\", DateTime.Now.ToString("MMddyyyyhhmmsstt") + ".txt");
+
+            LogFileName = fileName;
+
+            using (var writer = File.CreateText(fileName))
+            {
+                foreach (var line in Logs)
+                {
+                    writer.WriteLine(line);
+                }
+            }
+
+        }
 
 
     }

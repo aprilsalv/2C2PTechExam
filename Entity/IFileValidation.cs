@@ -13,6 +13,8 @@ namespace _2C2PTechExam.Entity
 
         string ErrorMessage { set; get; }
 
+        string LogFileName { set; get; }
+
         List<Invoice> Invoices { set; get; }
 
         string RootFolder { set; get; }

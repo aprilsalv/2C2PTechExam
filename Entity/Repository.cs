@@ -34,9 +34,7 @@ namespace _2C2PTechExam.Entity
         public  string UploadFile(IFormFile file)
         {
 
-            List<Invoice> invoiceList;          
-
-            string ext = System.IO.Path.GetExtension(file.FileName);
+           string ext = System.IO.Path.GetExtension(file.FileName);
 
             switch (ext)
             {
@@ -54,24 +52,21 @@ namespace _2C2PTechExam.Entity
             string rtn = "";
             ifileValidate.RootFolder = RootFolder;
 
+            
             if (ifileValidate.FileIsValid(file))
             {
-                 context.BulkInsert(ifileValidate.Invoices);
+                context.BulkInsert(ifileValidate.Invoices);
+
+                rtn = "Success" + "|" + ifileValidate.LogFileName;
             }
-            else {
-                rtn = ifileValidate.ErrorMessage;
+            else
+            {
+                rtn = ifileValidate.ErrorMessage + "|" + ifileValidate.LogFileName; 
             }
 
+             return rtn;
 
-
-
-            return rtn;
-
-            //context.BulkInsert(invoiceList);
-
-
-            //await context.SaveChangesAsync();
-        }
+       }
 
 
     }

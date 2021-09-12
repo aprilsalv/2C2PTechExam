@@ -54,12 +54,25 @@ namespace _2C2PTechExam.Controllers
 
                 //ViewBag.Countries = new List<NewsStyleUriParser>;
                 repository.RootFolder = this._env.ContentRootPath;
-                ViewBag.Message = repository.UploadFile(Request.Form.Files[0]);
+                string rtnMessage = repository.UploadFile(Request.Form.Files[0]);
+
+                ViewBag.Message = rtnMessage.Split("|")[0];
+                ViewBag.LogFileName = rtnMessage.Split("|")[1];
+
                 return View("Index");
             }
             else
                
                 return View("Index");
+        }
+
+
+        public FileResult Download(string fileName)
+        {
+           
+            byte[] fileBytes = System.IO.File.ReadAllBytes(fileName);
+
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
 
     }
