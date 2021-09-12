@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+﻿using _2C2PTechExam.Entity;
+using _2C2PTechExam.Models;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace _2C2PTechExam.Controllers
 {
@@ -12,43 +9,49 @@ namespace _2C2PTechExam.Controllers
     [ApiController]
     public class InvoiceController : ControllerBase
     {
-        // GET: api/<InvoiceController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IRepository<Invoice> repository;
+        public InvoiceController (IRepository<Invoice> repository)
         {
-            return new string[] { "value1", "value2" };
+
+            this.repository = repository;
+     
         }
 
-        // GET api/<InvoiceController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // GET api/<InvoiceController>/ByCurrency/{currency}
         [Route("ByCurrency/{currency}")]
-        public string ByCurrency(string currency)
-        {
-            return "value";
+        public string ByCurrency(string currency)       {
+ 
+            var resultTuple =  repository.GetInvoiceByCurrency(currency);
+
+           
+
+            return JsonConvert.SerializeObject(resultTuple);
         }
 
-        // POST api/<InvoiceController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+
+        // GET api/<InvoiceController>/ByStatus/{status}
+        [Route("ByStatus/{status}")]
+        public string ByStatus(string status)
         {
+
+            var resultTuple = repository.GetInvoiceByStatus(status);
+
+
+
+            return JsonConvert.SerializeObject(resultTuple);
         }
 
-        // PUT api/<InvoiceController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+
+        // GET api/<InvoiceController>/ByDateRange/{dateFrom}/{dateTo}
+        [Route("ByDateRange/{dateFrom}/{dateTo}")]
+        public string ByDateRange(string dateFrom, string dateTo)
         {
+
+            var resultTuple = repository.GetInvoiceByDateRange(dateFrom, dateTo);
+
+            return JsonConvert.SerializeObject(resultTuple);
         }
 
-        // DELETE api/<InvoiceController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

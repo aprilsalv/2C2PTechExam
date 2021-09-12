@@ -1,10 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using _2C2PTechExam.Models;
+﻿using _2C2PTechExam.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
 namespace _2C2PTechExam.Entity
@@ -68,6 +65,79 @@ namespace _2C2PTechExam.Entity
 
        }
 
+        public IEnumerable<dynamic> GetInvoiceByCurrency(string currency)
+        {
 
+
+            var query = (from m in context.Invoices
+                         where m.CurrenyCode == currency
+                         select new
+                         {
+                             id = m.TransactionIdentificator,
+                             payment = m.Amount + " " + m.CurrenyCode,
+                             Status =
+                              (
+                                    m.Status == "Approved" ? "A" :
+                                    m.Status == "Failed" ? "R" :
+                                    m.Status == "Rejected" ? "R" :
+                                    m.Status == "Finished" ? "D" : 
+                                    m.Status == "Done" ? "D" : "X"
+                                )
+                             
+                         }).ToList();
+
+
+            return query;
+        }
+
+        public IEnumerable<dynamic> GetInvoiceByStatus(string status)
+        {
+
+
+            var query = (from m in context.Invoices
+                         where m.Status == status
+                         select new
+                         {
+                             id = m.TransactionIdentificator,
+                             payment = m.Amount + " " + m.CurrenyCode,
+                             Status =
+                              (
+                                    m.Status == "Approved" ? "A" :
+                                    m.Status == "Failed" ? "R" :
+                                    m.Status == "Rejected" ? "R" :
+                                    m.Status == "Finished" ? "D" :
+                                    m.Status == "Done" ? "D" : "X"
+                                )
+
+                         }).ToList();
+
+
+            return query;
+        }
+
+        public IEnumerable<dynamic> GetInvoiceByDateRange(string dateFrom, string dateTo)
+        {
+
+
+            var query = (from m in context.Invoices
+                         where m.TransactionDate >= DateTime.Parse(dateFrom) && m.TransactionDate <= DateTime.Parse(dateTo)
+                         select new
+                         {
+                             id = m.TransactionIdentificator,
+                             payment = m.Amount + " " + m.CurrenyCode,
+                             Status =
+                              (
+                                    m.Status == "Approved" ? "A" :
+                                    m.Status == "Failed" ? "R" :
+                                    m.Status == "Rejected" ? "R" :
+                                    m.Status == "Finished" ? "D" :
+                                    m.Status == "Done" ? "D" : "X"
+                                )
+
+                         }).ToList();
+
+
+            return query;
+        }
     }
 }
