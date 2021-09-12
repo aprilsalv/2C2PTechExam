@@ -1,0 +1,5 @@
+"Invoice00001","1,000","USD","20/02/2019 16:33:16","Approved" [ Record is Ok.]
+"Invoice00002","1,500","AED","20/02/2020 05:33:16","Failed" [ Record is Ok.]
+"Invoice00003","900.75","EUR","15/01/2020 05:33:16","Failed" [ Record is Ok.]
+"Invoice00004","1,100.10","INR","11/07/2020 05:33:16","Failed" [ Record is Ok.]
+"Invoice00005","1,500.50","AED","10/10/2020 05:33:16","Failed" [ Record is Ok.]
